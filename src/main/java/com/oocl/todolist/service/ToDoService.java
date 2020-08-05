@@ -28,6 +28,6 @@ public class ToDoService {
     }
 
     public void deleteById(int id) {
-
+        toDoRepository.deleteById(id);
     }
 }
