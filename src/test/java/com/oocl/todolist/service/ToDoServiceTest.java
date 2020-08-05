@@ -2,11 +2,15 @@ package com.oocl.todolist.service;
 
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
+import com.sun.xml.bind.v2.TODO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -36,5 +40,19 @@ public class ToDoServiceTest {
         assertEquals(mockedToDo.getId(),returnToDo.getId());
         assertEquals(mockedToDo.getContent(),returnToDo.getContent());
         assertEquals(mockedToDo.isStatus(),returnToDo.isStatus());
+    }
+
+    @Test
+    void should_return_todo_list_when_get_all_todo_given_nothing() {
+        //given
+        List<ToDo> mockedToDos=new LinkedList<>();
+        mockedToDos.add(new ToDo(1,"content2",false));
+
+
+        //when
+        List<TODO> toDos=toDoService.findAll();
+
+        //then
+        assertEquals(mockedToDos.size(),toDos.size());
     }
 }
