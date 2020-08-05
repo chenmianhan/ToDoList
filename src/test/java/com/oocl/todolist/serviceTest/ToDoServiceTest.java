@@ -1,4 +1,4 @@
-package com.oocl.todolist.service;
+package com.oocl.todolist.serviceTest;
 
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
