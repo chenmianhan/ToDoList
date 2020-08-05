@@ -72,4 +72,17 @@ public class ToDoServiceTest {
         assertEquals(newToDo.getId(),returnToDo.getId());
         assertEquals(newToDo.isStatus(),returnToDo.isStatus());
     }
+
+    @Test
+    void should_delete_a_todo_when_delete_todo_given_id() {
+        //given
+        int id=2;
+
+        //when
+        toDoService.deleteById(id);
+
+        //then
+        Mockito.verify(mockedToDoRepository).deleteById(id);
+
+    }
 }
