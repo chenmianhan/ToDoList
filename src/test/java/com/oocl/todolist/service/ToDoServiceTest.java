@@ -55,5 +55,18 @@ public class ToDoServiceTest {
         assertEquals(mockedToDos.size(),toDos.size());
     }
 
+    @Test
+    void should_return_todo_when_update_todo_given_id_1_status_true() {
+        //given
+        ToDo oldToDo=new ToDo(1,"content1",false);
+        ToDo mockedToDo=new ToDo(1,"content1",true);
+        int id=1;
 
+        //when
+        ToDo newToDo=toDoService.updateToDo(id,oldToDo);
+
+        //then
+        assertEquals(mockedToDo.getId(),newToDo.getId());
+        assertEquals(mockedToDo.isStatus(),newToDo.isStatus());
+    }
 }
