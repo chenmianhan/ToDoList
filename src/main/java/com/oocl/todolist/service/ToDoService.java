@@ -2,7 +2,7 @@ package com.oocl.todolist.service;
 
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
-import com.sun.xml.bind.v2.TODO;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,11 @@ public class ToDoService {
         return toDoRepository.save(toDo);
     }
 
-    public List<TODO> findAll() {
+    public List<ToDo> findAll() {
+        return toDoRepository.findAll();
+    }
+
+    public ToDo updateToDo(int id, ToDo oldToDo) {
         return null;
     }
 }

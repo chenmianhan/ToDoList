@@ -2,8 +2,7 @@ package com.oocl.todolist.service;
 
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
-import com.sun.xml.bind.v2.TODO;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -47,12 +46,14 @@ public class ToDoServiceTest {
         //given
         List<ToDo> mockedToDos=new LinkedList<>();
         mockedToDos.add(new ToDo(1,"content2",false));
-
+        when(mockedToDoRepository.findAll()).thenReturn(mockedToDos);
 
         //when
-        List<TODO> toDos=toDoService.findAll();
+        List<ToDo> toDos=toDoService.findAll();
 
         //then
         assertEquals(mockedToDos.size(),toDos.size());
     }
+
+
 }
