@@ -17,8 +17,9 @@ public class ToDoServiceTest {
     private ToDoRepository mockedToDoRepository;
     @BeforeEach
      void beforeEach() {
-        toDoService=new ToDoService();
         mockedToDoRepository= Mockito.mock(ToDoRepository.class);
+        toDoService=new ToDoService(mockedToDoRepository);
+
     }
 
     @Test
@@ -26,6 +27,7 @@ public class ToDoServiceTest {
         //given
         ToDo toDo=new ToDo(null,"content1",false);
         ToDo mockedToDo=new ToDo(1,"content1",false);
+        when(mockedToDoRepository.save(toDo)).thenReturn(mockedToDo);
 
         //when
         ToDo returnToDo=toDoService.addToDo(toDo);
