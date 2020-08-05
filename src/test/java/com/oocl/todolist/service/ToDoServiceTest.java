@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 public class ToDoServiceTest {
@@ -59,14 +60,16 @@ public class ToDoServiceTest {
     void should_return_todo_when_update_todo_given_id_1_status_true() {
         //given
         ToDo oldToDo=new ToDo(1,"content1",false);
-        ToDo mockedToDo=new ToDo(1,"content1",true);
+        ToDo newToDo=new ToDo(1,"content1",true);
         int id=1;
 
         //when
-        ToDo newToDo=toDoService.updateToDo(id,oldToDo);
+        when(mockedToDoRepository.findById(id)).thenReturn(java.util.Optional.of(oldToDo));
+        when(mockedToDoRepository.save(oldToDo)).thenReturn(newToDo);
+        ToDo returnToDo=toDoService.updateToDo(id,oldToDo);
 
         //then
-        assertEquals(mockedToDo.getId(),newToDo.getId());
-        assertEquals(mockedToDo.isStatus(),newToDo.isStatus());
+        assertEquals(newToDo.getId(),returnToDo.getId());
+        assertEquals(newToDo.isStatus(),returnToDo.isStatus());
     }
 }

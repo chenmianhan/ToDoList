@@ -22,6 +22,8 @@ public class ToDoService {
     }
 
     public ToDo updateToDo(int id, ToDo oldToDo) {
-        return null;
+        if(id==oldToDo.getId()&& toDoRepository.findById(id).isPresent())
+        return toDoRepository.save(oldToDo);
+        else return null;
     }
 }
