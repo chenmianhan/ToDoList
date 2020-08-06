@@ -21,4 +21,5 @@ public class ToDoListMapperTest {
         assertEquals(toDo.getContent(),toDoResponse.getContent());
         assertEquals(toDo.isStatus(),toDoResponse.isStatus());
     }
+
 }
