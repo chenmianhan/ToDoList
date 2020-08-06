@@ -20,13 +20,14 @@ public class ToDoService {
     public List<ToDo> findAll() {
         return toDoRepository.findAll();
     }
-
+//ToDo
     public ToDo updateToDo(int id, ToDo oldToDo) {
+
         if(id==oldToDo.getId()&& toDoRepository.findById(id).isPresent())
         return toDoRepository.save(oldToDo);
         else return null;
     }
-
+    //ToDo
     public void deleteById(int id) {
         toDoRepository.deleteById(id);
     }

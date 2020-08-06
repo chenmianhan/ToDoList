@@ -1,5 +1,6 @@
 package com.oocl.todolist.service;
 
+import com.oocl.todolist.exception.IllegalOperationException;
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
 
@@ -11,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class ToDoServiceTest {
@@ -84,5 +84,18 @@ public class ToDoServiceTest {
         //then
         Mockito.verify(mockedToDoRepository).deleteById(id);
 
+    }
+
+    @Test
+    void should_throw_illegal_operation_exception_when_update_to_do_given_id_4_and_to_do_id_3() {
+        //given
+        int id=4;
+        ToDo toDo=new ToDo(3,"content3",false);
+
+        //when
+        Exception exception=assertThrows(IllegalOperationException.class,()->toDoService.updateToDo(4,toDo));
+
+        //then
+        assertEquals(IllegalOperationException.class, exception.getClass());
     }
 }

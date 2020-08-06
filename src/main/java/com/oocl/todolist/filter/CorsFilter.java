@@ -14,12 +14,12 @@ public class CorsFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");//设置允许跨域的域名，需要发送cookie信息，所以此处需要指定具体的域名，
+        httpResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         httpResponse.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        httpResponse.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, POST");//允许跨域的请求方式
-        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");//允许发送Cookie信息
-        httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // 支持HTTP 1.1.
-        httpResponse.setHeader("Pragma", "no-cache"); // 支持HTTP 1.0. response.setHeader("Expires", "0");
+        httpResponse.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, POST,PATCH");
+        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+        httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        httpResponse.setHeader("Pragma", "no-cache");
         chain.doFilter(request, response);
     }
 
