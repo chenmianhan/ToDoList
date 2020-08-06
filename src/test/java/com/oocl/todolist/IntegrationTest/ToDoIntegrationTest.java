@@ -90,4 +90,15 @@ public class ToDoIntegrationTest {
 
         //then
     }
+
+    @Test
+    void should_delete_to_do_when_hit_delete_to_do_endpoints_given_id_1() throws Exception {
+        int id=1;
+        toDoRepository.save(new ToDo(1,"content1",false));
+        //when
+        mockMvc.perform(delete(("/todos/"+id)))
+                .andExpect(status().isOk());
+
+        //then
+    }
 }
