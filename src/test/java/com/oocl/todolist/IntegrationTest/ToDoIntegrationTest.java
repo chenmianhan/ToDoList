@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,8 +53,9 @@ public class ToDoIntegrationTest {
     void should_add_toDo_when_hit_post_toDo_endpoints_given_new_employee_info() throws Exception {
         //given
         String toDoInfo="{\n" +
-                "    \"content\":\"content33\",\n" +
-                "    \"status\":false,\n" +
+                "    \"id\": null,\n" +
+                "    \"content\": \"content12\",\n" +
+                "    \"status\": false\n" +
                 "}";
 
         //when
@@ -63,8 +63,31 @@ public class ToDoIntegrationTest {
                 .content(toDoInfo))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.content").value("content1"))
+                .andExpect(jsonPath("$.content").value("content12"))
                 .andExpect(jsonPath("$.status").value("false"));
+
+        //then
+    }
+
+    @Test
+    void should_update_toDo_when_hit_patch_toDo_endpoints_given_id_1_and_new_todo() throws Exception {
+        //given
+        int id=1;
+        toDoRepository.save(new ToDo(1,"content1",false));
+        String toDoInfo="{\n" +
+                "    \"id\":1,\n" +
+                "    \"content\": \"content1\",\n" +
+                "    \"status\": true\n" +
+                "}";
+
+        //when
+        mockMvc.perform(patch(("/todos/"+id)).contentType(MediaType.APPLICATION_JSON)
+                .content(toDoInfo))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.content").value("content1"))
+                .andExpect(jsonPath("$.status").value("true"));
+
         //then
     }
 }

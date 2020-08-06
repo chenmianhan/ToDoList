@@ -11,6 +11,7 @@ public class ToDo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String content;
+
     private boolean status;
 
     public ToDo(Integer id, String content, boolean status) {
