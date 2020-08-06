@@ -1,6 +1,7 @@
 package com.oocl.todolist.service;
 
 import com.oocl.todolist.exception.IllegalOperationException;
+import com.oocl.todolist.exception.NoSuchIdException;
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
 
@@ -21,13 +22,11 @@ public class ToDoService {
     public List<ToDo> findAll() {
         return toDoRepository.findAll();
     }
-//ToDo
-    public ToDo updateToDo(int id, ToDo oldToDo) throws IllegalOperationException {
+    public ToDo updateToDo(int id, ToDo oldToDo) throws IllegalOperationException, NoSuchIdException {
         if(id!=oldToDo.getId())throw new IllegalOperationException();
-
-        if(id==oldToDo.getId()&& toDoRepository.findById(id).isPresent())
+        if(!toDoRepository.findById(id).isPresent())
+            throw new NoSuchIdException();
         return toDoRepository.save(oldToDo);
-        else return null;
     }
     //ToDo
     public void deleteById(int id) {

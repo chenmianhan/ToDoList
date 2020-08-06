@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -59,7 +60,7 @@ public class ToDoServiceTest {
     }
 
     @Test
-    void should_return_todo_when_update_todo_given_id_1_status_true() throws IllegalOperationException {
+    void should_return_todo_when_update_todo_given_id_1_status_true() throws IllegalOperationException, NoSuchIdException {
         //given
         ToDo oldToDo=new ToDo(1,"content1",false);
         ToDo newToDo=new ToDo(1,"content1",true);
@@ -106,7 +107,7 @@ public class ToDoServiceTest {
         //given
         int id=3;
         ToDo toDo=new ToDo(3,"content3",false);
-        when(mockedToDoRepository.findById(id)).thenReturn(null);
+        when(mockedToDoRepository.findById(id)).thenReturn(Optional.empty());
 
         //when
         Exception exception=assertThrows(NoSuchIdException.class,()->toDoService.updateToDo(3,toDo));

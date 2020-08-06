@@ -1,6 +1,7 @@
 package com.oocl.todolist.controller;
 
 import com.oocl.todolist.exception.IllegalOperationException;
+import com.oocl.todolist.exception.NoSuchIdException;
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class ToDoController {
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ToDo updateToDo(@PathVariable int id, @RequestBody ToDo toDo) throws IllegalOperationException {
+    public ToDo updateToDo(@PathVariable int id, @RequestBody ToDo toDo) throws IllegalOperationException, NoSuchIdException {
         System.out.println("updateToDo done:"+toDo.getContent());
 
 
