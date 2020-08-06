@@ -116,4 +116,17 @@ public class ToDoServiceTest {
         assertEquals(NoSuchIdException.class, exception.getClass());
 
     }
+
+    @Test
+    void should_no_such_id_exception_when_delete_to_do_given_no_exist_id() {
+        //given
+        int id=3;
+        when(mockedToDoRepository.findById(id)).thenReturn(Optional.empty());
+
+        //when
+        Exception exception=assertThrows(NoSuchIdException.class,()->toDoService.deleteById(3));
+
+        //then
+        assertEquals(NoSuchIdException.class, exception.getClass());
+    }
 }
