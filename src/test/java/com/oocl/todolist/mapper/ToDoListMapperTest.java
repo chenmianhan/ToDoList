@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ToDoListMapperTest {
-    private final ToDoMapper toDoListMapper=new ToDoMapper();
+    private final ToDoMapper toDoMapper=new ToDoMapper();
 
     @Test
     void should_attribute_equal_when_convert_to_do_to_to_do_response_given_to_do() {
@@ -14,12 +14,25 @@ public class ToDoListMapperTest {
         ToDo toDo=new ToDo(1,"content",false);
 
         //when
-        ToDoResponse toDoResponse=toDoListMapper.covertToDoToToDoResponse(toDo);
+        ToDoResponse toDoResponse=toDoMapper.covertToDoToToDoResponse(toDo);
 
         //then
         assertEquals(toDo.getId(),toDoResponse.getId());
         assertEquals(toDo.getContent(),toDoResponse.getContent());
         assertEquals(toDo.isStatus(),toDoResponse.isStatus());
+    }
+    @Test
+    void should_attribute_equal_when_convert_to_do_request_to_to_do_given_to_do() {
+        //given
+        ToDoRequest toDoRequest =new ToDoRequest(1,"content",false);
+
+        //when
+        ToDo toDo=toDoMapper.covertToDoRequestToToDo(toDoRequest);
+
+        //then
+        assertEquals(toDoRequest.getId(),toDo.getId());
+        assertEquals(toDoRequest.getContent(),toDo.getContent());
+        assertEquals(toDoRequest.isStatus(),toDo.isStatus());
     }
 
 }
