@@ -1,5 +1,6 @@
 package com.oocl.todolist.service;
 
+import com.oocl.todolist.exception.IllegalOperationException;
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
 
@@ -21,7 +22,8 @@ public class ToDoService {
         return toDoRepository.findAll();
     }
 //ToDo
-    public ToDo updateToDo(int id, ToDo oldToDo) {
+    public ToDo updateToDo(int id, ToDo oldToDo) throws IllegalOperationException {
+        if(id!=oldToDo.getId())throw new IllegalOperationException();
 
         if(id==oldToDo.getId()&& toDoRepository.findById(id).isPresent())
         return toDoRepository.save(oldToDo);

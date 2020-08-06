@@ -57,7 +57,7 @@ public class ToDoServiceTest {
     }
 
     @Test
-    void should_return_todo_when_update_todo_given_id_1_status_true() {
+    void should_return_todo_when_update_todo_given_id_1_status_true() throws IllegalOperationException {
         //given
         ToDo oldToDo=new ToDo(1,"content1",false);
         ToDo newToDo=new ToDo(1,"content1",true);
@@ -98,4 +98,6 @@ public class ToDoServiceTest {
         //then
         assertEquals(IllegalOperationException.class, exception.getClass());
     }
+
+
 }
