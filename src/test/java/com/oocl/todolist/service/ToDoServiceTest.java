@@ -1,6 +1,7 @@
 package com.oocl.todolist.service;
 
 import com.oocl.todolist.exception.IllegalOperationException;
+import com.oocl.todolist.exception.NoSuchIdException;
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
 
@@ -13,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 public class ToDoServiceTest {
@@ -99,5 +101,18 @@ public class ToDoServiceTest {
         assertEquals(IllegalOperationException.class, exception.getClass());
     }
 
+    @Test
+    void should_no_such_id_exception_when_update_to_do_given_no_exist_id() {
+        //given
+        int id=3;
+        ToDo toDo=new ToDo(3,"content3",false);
+        when(mockedToDoRepository.findById(id)).thenReturn(null);
 
+        //when
+        Exception exception=assertThrows(NoSuchIdException.class,()->toDoService.updateToDo(3,toDo));
+
+        //then
+        assertEquals(NoSuchIdException.class, exception.getClass());
+
+    }
 }
