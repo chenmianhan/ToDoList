@@ -23,9 +23,11 @@ public class ToDoService {
         return toDoRepository.findAll();
     }
     public ToDo updateToDo(int id, ToDo oldToDo) throws IllegalOperationException, NoSuchIdException {
+
         if(id!=oldToDo.getId())throw new IllegalOperationException();
         if(!toDoRepository.findById(id).isPresent())
             throw new NoSuchIdException();
+
         return toDoRepository.save(oldToDo);
     }
     //ToDo

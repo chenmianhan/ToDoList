@@ -3,7 +3,6 @@ package com.oocl.todolist.IntegrationTest;
 import com.oocl.todolist.model.ToDo;
 import com.oocl.todolist.repository.ToDoRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -72,10 +69,11 @@ public class ToDoIntegrationTest {
     @Test
     void should_update_toDo_when_hit_patch_toDo_endpoints_given_id_1_and_new_todo() throws Exception {
         //given
-        int id=1;
-        toDoRepository.save(new ToDo(1,"content1",false));
+
+        ToDo newToDo=toDoRepository.save(new ToDo(1,"content1",false));
+        int id=newToDo.getId();
         String toDoInfo="{\n" +
-                "    \"id\":1,\n" +
+                "    \"id\":"+newToDo.getId()+",\n" +
                 "    \"content\": \"content1\",\n" +
                 "    \"status\": true\n" +
                 "}";
@@ -93,8 +91,8 @@ public class ToDoIntegrationTest {
 
     @Test
     void should_delete_to_do_when_hit_delete_to_do_endpoints_given_id_1() throws Exception {
-        int id=1;
-        toDoRepository.save(new ToDo(1,"content1",false));
+        ToDo todo=toDoRepository.save(new ToDo(1,"content1",false));
+        int id=todo.getId();
         //when
         mockMvc.perform(delete(("/todos/"+id)))
                 .andExpect(status().isOk());
@@ -105,10 +103,43 @@ public class ToDoIntegrationTest {
     @Test
     void should_return_status_not_found_when_hit_delete_to_do_endpoints_given_not_exist_id() throws Exception {
         int id=1;
+
         //when
         mockMvc.perform(delete(("/todos/"+id)))
                 .andExpect(status().isNotFound());
+        //then
+    }
+    @Test
+    void should_return_status_not_found_when_hit_update_to_do_endpoints_given_not_exist_id() throws Exception {
+        //when
+        //when
+        int id=1;
+        String toDoInfo="{\n" +
+                "    \"id\":1,\n" +
+                "    \"content\": \"content1\",\n" +
+                "    \"status\": true\n" +
+                "}";
+        mockMvc.perform(patch(("/todos/"+id)).contentType(MediaType.APPLICATION_JSON)
+                .content(toDoInfo))
+                .andExpect(status().isNotFound());
+
+        //then
+
+    }
+    @Test
+    void should_return_status_forbidden_when_hit_update_to_do_endpoints_given_id_and_to_do() throws Exception {
+        ToDo toDo=toDoRepository.save(new ToDo(null,"content1",false));
+        int id=toDo.getId()+1;
+        String toDoInfo="{\n" +
+                "    \"id\":"+toDo.getId()+",\n" +
+                "    \"content\": \"content1\",\n" +
+                "    \"status\": true\n" +
+                "}";
+        mockMvc.perform(patch(("/todos/"+id)).contentType(MediaType.APPLICATION_JSON)
+                .content(toDoInfo))
+                .andExpect(status().isForbidden());
 
         //then
     }
+
 }
