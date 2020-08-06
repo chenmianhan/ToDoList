@@ -35,8 +35,11 @@ public class ToDoController {
     public ToDo updateToDo(@PathVariable int id, @RequestBody ToDo toDo) {
         return toDoService.updateToDo(id, toDo);
     }
-
-
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteToDo(@PathVariable int id){
+        toDoService.deleteById(id);
+    }
 
 
 }
