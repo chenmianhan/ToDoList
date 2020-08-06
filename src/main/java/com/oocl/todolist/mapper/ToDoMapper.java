@@ -8,11 +8,15 @@ public class ToDoMapper {
         ToDoResponse toDoResponse=new ToDoResponse();
         toDoResponse.setContent(toDo.getContent());
         toDoResponse.setId(toDo.getId());
-        toDoResponse.setStatus(toDoResponse.isStatus());
+        toDoResponse.setStatus(toDo.isStatus());
         return toDoResponse;
     }
 
     public ToDo covertToDoRequestToToDo(ToDoRequest toDoRequest) {
-        return null;
+        ToDo toDo=new ToDo();
+        toDo.setContent(toDoRequest.getContent());
+        toDo.setId(toDoRequest.getId());
+        toDo.setStatus(toDoRequest.isStatus());
+        return toDo;
     }
 }
