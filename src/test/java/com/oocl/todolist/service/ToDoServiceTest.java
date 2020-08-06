@@ -77,9 +77,10 @@ public class ToDoServiceTest {
     }
 
     @Test
-    void should_delete_a_todo_when_delete_todo_given_id() {
+    void should_delete_a_todo_when_delete_todo_given_id() throws NoSuchIdException {
         //given
         int id=2;
+        when(mockedToDoRepository.findById(id)).thenReturn(java.util.Optional.of(new ToDo(2,"content1",false)));
 
         //when
         toDoService.deleteById(id);

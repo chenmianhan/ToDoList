@@ -29,7 +29,9 @@ public class ToDoService {
         return toDoRepository.save(oldToDo);
     }
     //ToDo
-    public void deleteById(int id) {
+    public void deleteById(int id) throws NoSuchIdException {
+        if(!toDoRepository.findById(id).isPresent())
+            throw new NoSuchIdException();
         toDoRepository.deleteById(id);
     }
 }
