@@ -103,7 +103,7 @@ public class ToDoIntegrationTest {
     }
 
     @Test
-    void should_return_status_not_found_when_delete_company_given_not_exist_id() throws Exception {
+    void should_return_status_not_found_when_hit_delete_to_do_endpoints_given_not_exist_id() throws Exception {
         int id=1;
         //when
         mockMvc.perform(delete(("/todos/"+id)))
